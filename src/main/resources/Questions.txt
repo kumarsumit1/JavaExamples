@@ -1,0 +1,366 @@
+1.What is SOP ?
+  System - Final class  in java.lang package. in rt.jar (runtime). Since final, it cannot be extended 
+           and private constructors stop it from instantiation. 
+           Its used to access for its static members - PrintStream, InputStream, Properties etc.
+           Among the facilities provided by the System class are standard input, standard output, and error output streams; 
+           access to externally defined properties and environment variables; a means of loading files 
+           and libraries; and a utility method for quickly copying a portion of an array.
+  
+  out - Its a static member of System class. out is an object of PrintStream class in java.io package.
+  
+  Println - method in PrintStream class. Prints the argument (precisely String.valueOf(argument)) 
+             and terminates the line. 
+
+Note
+System -Class
+out -static Object
+println() -method
+
+
+
+//It looks something like this :
+public final class System  
+{
+    public static PrintStream out;
+    /** Don't let anyone instantiate this class */
+    private System() {
+    }
+}
+
+class PrintStream
+{
+    public void println (){
+    }
+}
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+2.Why wait(), notify() and notifyAll() methods have been defined in the Object class?
+
+
+
+3.Why String has been made immutable in Java?
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1.abstraction vs encapsulation
+2.What’s difference between Association, Aggregation and Inheritance relationships?
+3Method Polymorphism through overloading. :One takes two number (n1 and n2) and other takes three (n1, n2 and n3)
+4 Object polymorphism by inheritance / interfaces.:Object polymorphism is possible by inheritance or interfaces
+ inheritance is extends
+interfaces is implements
+5What is an Abstract class?:
+Normally abstract classes have base implementation and then child classes derive from the abstract class to make the class concrete.We can not create object of abstract class it can only be inherited in a below class.
+they are also extended.
+
+6What are Abstract methods?
+Abstract class can contain abstract methods. Abstract methods do not have implementation.Abstract methods should be implemented in the subclasses which inherit them. So if an abstract class has an abstract method class inheriting the abstract class should implement the method or else java compiler will through an error.
+One way the interviewer would like to confuse you is if we do not implement a abstract method will the program compile.
+
+What’s the difference between “Abstract” classes and “Interfaces”?
+Difference between Abstract class and Interface is as follows:-
+√ Abstract class can only be inherited while interfaces can not be it has to be implemented.
+√ Interface cannot implement any methods, whereas an abstract class can have implementation.
+√ Class can implement many interfaces but can have only one super class.
+√ Interface is not part of the class hierarchy while Abstract class comes in through inheritance.
+√ Unrelated classes can implement the same interface.
+
+What’s difference between Static and Non-Static fields of a class?
+Non-Static values are also called as instance variables. Each object of the class has its
+own copy of Non-Static instance variables. So when a new object is created of the same
+class it will have completely its own copy of instance variables.
+While Static values have only one copy of instance variables and will be shared among all
+the objects of the class.
+
+Constructors have no return type, not even void. This is because the implicit return type of a class' constructor is the class type itself.
+
+How garbage collecor work 
+
+“Mark” and “Sweep” algorithm is done for removing unused objects from memory. “Mark”
+and “Sweep” refer to two phases before an unused object is garbage collected. In “Mark”
+phase the garbage collector runs through all objects and marks object as unused depending
+on the roots reach to the object. In the “Sweep” phase unmarked objects are freed, and
+the resulting memory is made available to the executing program.
+
+How can we force the garbage collector to run?
+Garbage collector can be run forcibly using “System.gc()” or “Runtime.gc()”
+
+How to Generate GC Log File?
+
+-XX:+PrintGCDetails -XX:+PrintGCDateStamps -Xloggc:<file-path>
+
+
+where file-path: Garbage Collection log file path.
+
+-XX:+PrintGCDateStamps would print the absolute time stamp in the log statement (i.e. “2014-11-18T16:39:25.303-0800”).
+
+-XX:+PrintGCDetails property would print the details of how much memory is reclaimed in each generation.
+https://dzone.com/articles/understanding-garbage-collection-log
+
+
+Difference between io and Nio in java ?
+
+https://dzone.com/articles/java-nio-vs-io
+
+
+http://www.toptal.com/java/why-you-need-to-upgrade-to-java-8-already
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+############ JAVA BASICS #########################################
+
+1. Java is pass-by-value.For primitives, you pass a copy of the actual value.For references to objects, you pass a copy of the reference.
+
+
+2. Mutable and Immutable Objects
+    Mutable Objects: When you have a reference to an instance of an object, the contents of that instance can be altered
+    Immutable Objects: When you have a reference to an instance of an object, the contents of that instance cannot be altered
+    
+     >>>> how to make an immutable object.
+       1. Don't provide "setter" methods — methods that modify fields or objects referred to by fields.
+       2.Make all fields final and private.
+       3. Don't allow subclasses to override methods. The simplest way to do this is to declare the class as final.
+             A more sophisticated approach is to make the constructor private and construct instances in factory methods.
+             Ensure that methods can't be overridden by either making the class final (Strong Immutability) or making your methods final (Weak Immutability)
+       4.If the instance fields include references to mutable objects, don't allow those objects to be changed:
+       5.Don't provide methods that modify the mutable objects.
+       6.Don't share references to the mutable objects. Never store references to external, mutable objects passed to the constructor;
+          if necessary, create copies, and store references to the copies. Similarly, create copies of your internal mutable objects
+          when necessary to avoid returning the originals in your methods.
+         If a field isn't primitive or immutable, MAKE A DEEP CLONE on the way in and the way out. 
+         
+   >>>>> Which classes are Immutable?
+          all of the java.lang package wrapper classes are immutable:
+            Boolean, Byte, Character, Double, Float, Integer, Long, Short, String.
+            java.util.Date,java.math.BigInteger and BigDecimal are not immutable.  
+
+Why main method is public static in Java
+public static void main(String args[]) java 1.4
+public static void main(String... args) java 1.5
+Why main mehtod is static in Java
+1. Since main method is static Java virtual Machine can call it without creating any instance of class which contains main method.
+
+2. Since C and C++ also has similar main method which serves as entry point for program execution, following that convention will only help Java.
+
+3. If main method were not declared static than JVM has to create instance of main Class and since constructor can be overloaded and can have arguments there would not be any certain and consistent way for JVM to find main method in Java.
+
+4. Anything which is declared in class in Java comes under reference type and requires object to be created before using them but static method and static data are loaded into separate memory inside JVM called context which is created when a class is loaded. If main method is static than it will be loaded in JVM context and are available to execution.
+
+Why main mehtod is public in Java
+Java specifies several access modifiers e.g. private, protected and public. Any method or variable which is declared public in Java can be accessible from outside of that class.
+Since main method is public in Java, JVM can easily access and execute it.
+
+Why main method is void in Java
+Since main method in Java is not supposed to return any value, its made void which simply means main is not returning anything.
+
+1. Apart from static, void and public you can use final, synchronized and strictfp modifier in signature of main method in Java.
+
+2. Main method in Java can be overloaded like any other method in Java but JVM will only call main method with specified signature specified above.
+
+3. You can use throws clause in signature of main method and can throw any checked or unchecked Exception.
+
+
+What is Marker interfaces in Java and why required
+Marker interface in Java is interfaces with no field or methods or in simple word empty interface in java is called marker interface.
+Example of market interface is Serializable, Clonnable and Remote interface.Marker interface indicate, signal or a command to Compiler orJVM.
+
+
+
+
+######################JAVA Tips  (http://www.javapractices.com/home/HomeAction.do   http://www.jusfortechies.com/java/ ;)##########################
+
+1.Try to prefer Interfaces instead of Abstract classes
+
+   First you can not inherit multiple classes in Java but you can definitely implements multiple interfaces. Its very easy to change the
+   implementation of an existing class and add implementation of one more interface rather then changing full hierarchy of class.
+
+     Again if you are 100% sure what methods an interface will have, then only start coding that interface. As it is very difficult to add a
+     new method in an existing interface without breaking the code that has already implemented it. On contrary a new method can be easily
+     added in Abstract class without breaking existing functionality         
+    
+
+2.Wherever possible try to use Primitive types instead of Wrapper classes
+
+3.Use Strings with utmost care.
+
+     Always carefully use Strings in your code. A simple concatenation of strings can reduce performance of program.
+     For example if we concatenate strings using + operator in a for loop then everytime + is used, it creates a new String object.
+     This will affect both memory usage and performance time.Use String builder.
+     Also whenever you want to instantiate a String object, never use its constructor but always instantiate it directly. For example:
+          //slow instantiation
+          String slow = new String("Yet another string object");
+
+          //fast instantiation
+          String fast = "Yet another string object";    
+         
+         
+4. Always return empty Collections and Arrays instead of null
+
+          Whenever your method is returning a collection element or an array, always make sure you return empty array/collection and not null.
+          This will save a lot of if else testing for null elements. For instance in below example we have a getter method that returns employee name.
+          If the name is null it simply return blank string “”.
+          public String getEmployeeName() {
+               return (null==employeeName ? "": employeeName);
+               }
+
+
+5.Avoid floating point numbers
+
+          It is a bad idea to use floating point to try to represent exact quantities like monetary amounts. Using floating point for
+          dollars-and-cents calculations is a recipe for disaster. Floating point numbers are best reserved for values such as measurements,
+          whose values are fundamentally inexact to begin with. For calculations of monetary amounts it is better to use BigDecimal.              
+         
+         
+         
+
+         
+   7. what is copy constructor :
+
+
+         
+8.Defensive copies are savior
+
+                    Defensive copies are the clone objects created to avoid mutation of an object. For example in below code we have defined a
+                    Student class which has a private field birth date that is initialized when the object is constructed.
+                        
+                    public class Student {
+                         private Date birthDate;
+                   
+                         public Student(birthDate) {
+                              this.birthDate = birthDate;
+                         }
+                   
+                         public Date getBirthDate() {
+                              return this.birthDate;
+                         }
+                    }
+
+                    Now we may have some other code that uses the Student object.
+                        
+                    public static void main(String []arg) {
+                   
+                         Date birthDate = new Date();
+                         Student student = new Student(birthDate);
+                   
+                         birthDate.setYear(2019);
+                   
+                         System.out.println(student.getBirthDate());
+                    }
+
+                    In above code we just created a Student object with some default birthdate. But then we changed the value of year of the birthdate.
+                    Thus when we print the birth date, its year was changed to 2019!
+
+                    To avoid such cases, we can use Defensive copies mechanism. Change the constructor of Student class to following.
+                        
+                    public Student(birthDate) {
+                         this.birthDate = new Date(birthDate);
+                    }
+
+                    This ensure we have another copy of birthdate that we use in Student class.          
+
+9.What is deep copy
+
+10. In for loop counting downwards is faster than counting up
+
+11. What is PATH and CLASSPATH in Java - Path vs ClassPath
+   PATH is an environment variable which is used to locate JDK binaries like "java" or "javac" command used to run java program and compile java source file. On the other hand CLASSPATH environment variable is used by System or Application ClassLoader to locate and load compile Java bytecodes stored in .class file.
+
+ In order to set PATH in Java you need to include JDK_HOME/bin directory in PATH environment variable while in order to set CLASSPATH in Java you need to include all those directory where you have put either your .class file or JAR file which is required by your Java application.
+
+PATH can not be overridden by any Java settings but CLASSPATH can be overridden by providing command line option -classpath or -cp to both "java" and "javac" commands or by using Class-Path attribute in Manifest file inside JAR archive. 
+
+12.What is anonymous class in java and its use ?
+
+The class itself has no name (this is why it's anonymous) and  It combines the class declaration and the creation of an instance of the class in one step. Since anonymous classes have no name, objects can not be instantiated from outside the class in which the anonymous class is defined. In fact, an anonymous object can only be instantiated from within the same scope in which it is defined.
+ 
+In short we can say that an anonymous class is an inner class that does not have a name at all. And whose instance is being created at the time of its creation.Anonymous inner classes are useful when we need to inherit a few properties (only one method) of a superclass and this is not a good idea to take overhead of creating a separate subclass for doing things so simple.
+ 
+Rules:
+   1.  An anonymous class must always extend a super class or implement an interface but it cannot have an explicit extends or implements clause.
+   2.  An anonymous class must implement all the abstract methods in the super class or the interface.
+   3. An anonymous class always uses the default constructor from the super class to create an instance.
+ 
+note: This is the only condition in java, where we have implemented an interface without even having a name of the class and nor using implement keyword.
+eg :
+ -->> List<String> ls= new ArrayList<String>();
+     Collections.sort(ls, new Comparator<Object>()
+   {
+       public int compare(Object o1, Object o2)
+       {
+          if(o1 instanceof String && o2 instanceof String)
+          {
+             String s_1 = (String)o1;
+             String s_2 = (String)o2;
+
+             return s_1.compareTo(s_2);
+          }
+          return 0;   
+       }
+   });
+
+-->> Thread thread = new Thread(){
+    public void run(){
+      System.out.println("Thread Running");  
+    }
+   }
+
+  thread.start();
+
+   OR 
+
+System.out.println(Thread.currentThread().getName());
+
+----------sample code -----------
+
+public class Implementation {
+     /* 
+       * This looks like we are creating an object of Apple class, but actually we 
+       * we have created an instance of anonymous subclass of Apple. The statement 
+       * written below creates an anonymous inner class with an instance of it and 
+       * the class is a subclass to Apple. 
+       */  
+     Apple apple = new Apple() {  
+            @Override  
+            public void print() {  
+             System.out.println("Printed from subclass of Apple !");  
+            }              
+            /* 
+             * Not a Overriden method. 
+             */  
+            public void add() {  
+             System.out.println("I am not present in Apple !");  
+            }  
+           };            
+           public void r() {  
+            /* 
+             * This will work fine. 
+             */  
+               apple.print();  
+            
+            /* 
+             * apple.add();    
+             * This will give a compilation error because, from a 
+             * superclass reference variable we can not call a member of subclass 
+             * that is not present in superclass. 
+             */  
+            
+           }  
+   }
+
+    for(int i=0; i<10; i++){
+      new Thread("" + i){
+        public void run(){
+          System.out.println("Thread: " + getName() + " running");
+        }
+      }.start();
+    }
+
+
+13.What are static factory methods in Java?
+
+ The factory method pattern is a way to encapsulate object creation. Without a factory method, you would simply call the class's constructor directly: Foo x = new Foo(). With this pattern, you would instead call the factory method: Foo x = Foo.create(). The constructors are marked private, so they cannot be called except from inside the class, and the factory method is marked as static so that it can be called without first having an object.
+
+There are a few advantages to this pattern. One is that the factory can choose from many subclasses (or implementers of an interface) and return that. This way the caller can specify the behavior desired via parameters, without having to know or understand a potentially complex class hierarchy.
+
+Another advantage is, as Matthew and James have pointed out, controlling access to a limited resource such as connections. This a way to implement pools of reusable objects - instead of building, using, and tearing down an object, if the construction and destruction are expensive processes it might make more sense to build them once and recycle them. The factory method can return an existing, unused instantiated object if it has one, or construct one if the object count is below some lower threshold, or throw an exception or return null if it's above the upper threshold.
+
+
+

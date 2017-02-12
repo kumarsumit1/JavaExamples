@@ -1,9 +1,0 @@
-1.What is SOP ?
-
-
-2.Why wait(), notify() and notifyAll() methods have been defined in the Object class?
-
-
-
-3.Why String has been made immutable in Java?
-
