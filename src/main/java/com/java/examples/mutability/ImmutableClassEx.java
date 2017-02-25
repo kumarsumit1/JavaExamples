@@ -1,7 +1,9 @@
 package com.java.examples.mutability;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 /*
     To create immutable class in java, you have to do following steps.
@@ -10,74 +12,15 @@ import java.util.Iterator;
     Make all fields private so that direct access is not allowed.
     Don’t provide setter methods for variables
   -->  Make all mutable fields final so that it’s value can be assigned only once.
-  -->  Initialize all the fields via a constructor performing deep copy.
-    Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference.
+  -->  Initialize all the fields via a constructor performing deep copy. Or for date instantiate a new date object
+    Perform cloning of objects in the getter methods to return a copy rather than returning the actual object reference. Or for date return 
+    a new object .
+    
+-->    Collections.unmodifiableMap(testMap) also can be used instead of cloning but in this case if we try to change any element it throws an error.
+    Hence exception handling should be taken care of .
  */
 
 public final class ImmutableClassEx {
-private final int id;
-	
-	private final String name;
-	
-	private final HashMap<String,String> testMap;
-	
-	public int getId() {
-		return id;
-	}
-
-
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * Accessor function for mutable objects
-	 */
-	public HashMap<String, String> getTestMap() {
-		//return testMap;
-		return (HashMap<String, String>) testMap.clone();
-	}
-
-	/**
-	 * Constructor performing Deep Copy
-	 * @param i
-	 * @param n
-	 * @param hm
-	 */
-	
-	public ImmutableClassEx(int i, String n, HashMap<String,String> hm){
-		System.out.println("Performing Deep Copy for Object initialization");
-		this.id=i;
-		this.name=n;
-		HashMap<String,String> tempMap=new HashMap<String,String>();
-		String key;
-		Iterator<String> it = hm.keySet().iterator();
-		while(it.hasNext()){
-			key=it.next();
-			tempMap.put(key, hm.get(key));
-		}
-		this.testMap=tempMap;
-	}
-	
-	//TODO
-	//comment the constructor providing deep copy and uncomment the constructor providing shallow copy.
-	//Also uncomment the return statement in getTestMap() method that returns the actual object reference and then execute the program once again
-	
-	/**
-	 * Constructor performing Shallow Copy
-	 * @param i
-	 * @param n
-	 * @param hm
-	 */
-	/**
-	public ImmutableClassEx(int i, String n, HashMap<String,String> hm){
-		System.out.println("Performing Shallow Copy for Object initialization");
-		this.id=i;
-		this.name=n;
-		this.testMap=hm;
-	}
-	*/
-	
 	/**
 	 * To test the consequences of Shallow Copy and how to avoid it with Deep Copy for creating immutable classes
 	 * @param args
@@ -89,31 +32,52 @@ private final int id;
 		
 		String s = "original";
 		
-		int i=10;
-		
-		ImmutableClassEx ce = new ImmutableClassEx(i,s,h1);
+		int id=10;
+		Date dt=new Date();
+		//Make sure the Immutable class is final
+		ImmutableClass ce = new ImmutableClass(id,s,h1,dt);
 		
 		//Lets see whether its copy by field or reference
 		System.out.println(s==ce.getName());
 		System.out.println(h1 == ce.getTestMap());
+		System.out.println(dt==ce.getDate());
 		//print the ce values
 		System.out.println("ce id:"+ce.getId());
 		System.out.println("ce name:"+ce.getName());
 		System.out.println("ce testMap:"+ce.getTestMap());
+		System.out.println("the date is : "+ce.getDate());
 		//change the local variable values
-		i=20;
+		//If you do shallow copying in the constructor then all these values will be modified
+		id=20;
 		s="modified";
 		h1.put("3", "third");
+		dt.setYear(2012);
 		//print the values again
 		System.out.println("ce id after local variable change:"+ce.getId());
 		System.out.println("ce name after local variable change:"+ce.getName());
 		System.out.println("ce testMap after local variable change:"+ce.getTestMap());
-		
-		HashMap<String, String> hmTest = ce.getTestMap();
-		hmTest.put("4", "new");
-		
+		System.out.println(" The date after local variable change :"+ce.getDate());
+		//The hashmap will change if we have not returned the cloned value or the new instance of Date object
+		Map<String, String> hmTest = ce.getTestMap();
+		hmTest.put("4", "new");		
 		System.out.println("ce testMap after changing variable from accessor methods:"+ce.getTestMap());
-
+		
+		Date fetchedDt=ce.getDate();
+		fetchedDt.setYear(2010);
+		System.out.println(" the changed date is :"+ce.getDate());
+		
+		//Test for Why Immutable class should be final
+		//if you don't make it final, then it is possible for someone to extend a class and create a subclass that 
+		//is mutable (either by adding new mutable fields, or overriding methods in a way that enables you to mutate
+		//protected fields of the original immutable class). 
+		//This is also the reason why String and other such immutable class are final .This can cause a 
+		//grave security flaw.
+		
+		Mutable obj = new Mutable(4);
+        Immutable immObj = (Immutable)obj;              
+        System.out.println(immObj.getValue());
+        obj.setValue(8);
+        System.out.println(immObj.getValue());
 	}
 
 }

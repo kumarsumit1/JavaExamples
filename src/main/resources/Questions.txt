@@ -1,4 +1,4 @@
-1.What is SOP ?
+﻿1.What is SOP ?
   System - Final class  in java.lang package. in rt.jar (runtime). Since final, it cannot be extended 
            and private constructors stop it from instantiation. 
            Its used to access for its static members - PrintStream, InputStream, Properties etc.
@@ -42,6 +42,21 @@ class PrintStream
 3.Why String has been made immutable in Java?
 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+1. Java Final Keyword
+
+    A java variable can be declared using the keyword final. Then the final variable can be assigned only once.
+    A variable that is declared as final and not initialized is called a blank final variable. A blank final variable forces the constructors to initialise it.
+    Java classes declared as final cannot be extended. Restricting inheritance!
+    Methods declared as final cannot be overridden. In methods private is equal to final, but in variables it is not.
+    final parameters – values of the parameters cannot be changed after initialization. Do a small java exercise to find out the implications of final parameters in method overriding.
+    Java local classes can only reference local variables and parameters that are declared as final.
+    A visible advantage of declaring a java variable as static final is, the compiled java class results in faster performance.
+    
+     The reference variable can be reassigned to other objects provided that it is not declared final.
+    
+     note : java final is different from constant used in c++
+
+
 1.abstraction vs encapsulation
 2.What’s difference between Association, Aggregation and Inheritance relationships?
 3Method Polymorphism through overloading. :One takes two number (n1 and n2) and other takes three (n1, n2 and n3)

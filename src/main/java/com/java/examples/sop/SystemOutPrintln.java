@@ -9,6 +9,9 @@ public class SystemOutPrintln {
 		try {
 			System.setOut(new PrintStream(new FileOutputStream("log.txt")));
 			System.out.println("Now the output is redirected!");
+			
+			
+			Object ne=new Object();
 		} catch(Exception e) {}
 
 	}
