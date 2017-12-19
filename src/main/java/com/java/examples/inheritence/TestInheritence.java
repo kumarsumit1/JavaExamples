@@ -51,7 +51,7 @@ public class TestInheritence {
 		
 		//Sub downSub=new Base(); --> This is not allowed and will throw compilation error
 		
-		Sub downSub=(Sub) new Base(); //This is allowed but will throw ClassCastException run time !
+	//	Sub downSub=(Sub) new Base(); //This is allowed but will throw ClassCastException run time !
 		
 	}
 

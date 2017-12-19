@@ -14,8 +14,7 @@ public class BasicStringOperation {
 		   //once we have the size of charc array ,we put the next string (another set of charc Array) next to it 
 		   
 		
-		//Occurrences of substring in a string
-		
+		//Occurrences of substring in a string		
 		Pattern p = Pattern.compile("hello");
 		Matcher m = p.matcher(str);
 		int count = 0;

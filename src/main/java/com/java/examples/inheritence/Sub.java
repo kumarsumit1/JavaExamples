@@ -1,8 +1,8 @@
 package com.java.examples.inheritence;
 public  class Sub extends Base {
-	//public int baseVar=5;
+	public int baseVar=5;
 	public int baseVar2=5;
-	public int subVar=6;
+	//public int subVar=6;
 	
 	
 	
