@@ -1,0 +1,35 @@
+# Sqoop
+
+## Syntax structure
+$ sqoop help import \
+usage: sqoop import [GENERIC-ARGS] [TOOL-ARGS]
+
+***Note that generic Hadoop arguments are preceeded by a single dash character (-), whereas tool-specific arguments start with two dashes (--), unless they are single character arguments such as -P.***
+
+Generic options supported are \
+-conf <configuration file>     specify an application configuration file \
+-D <property=value>            use value for given property \
+-fs <local|namenode:port>      specify a namenode \
+-jt <local|jobtracker:port>    specify a job tracker \
+-files <comma separated list of files>    specify comma separated files to be copied to the map reduce cluster \
+-libjars <comma separated list of jars>    specify comma separated jar files to include in the classpath. \
+-archives <comma separated list of archives>    specify comma separated archives to be unarchived on the compute machines. 
+
+Common arguments: \
+--connect <jdbc-uri>     Specify JDBC connect string \
+--connect-manager <class-name>     Specify connection manager class to use \
+--driver <class-name>    Manually specify JDBC driver class to use \
+--hadoop-mapred-home `<dir>`      Override $HADOOP_MAPRED_HOME \
+--help                   Print usage instructions \
+--password-file          Set path for file containing authentication password \
+-P                       Read password from console \
+--password <password>    Set authentication password \
+--username <username>    Set authentication username \
+--verbose                Print more information while working
+
+The -conf, -D, -fs and -jt arguments control the configuration and Hadoop server settings. ***For example, the -D mapred.job.name=<job_name> can be used to set the name of the MR job that Sqoop launches***, if not specified, the name defaults to the jar name for the job - which is derived from the used table name. 
+
+***You must supply the generic arguments -conf, -D, and so on after the tool name but before any tool-specific arguments (such as --connect).***
+
+## Using Options Files to Pass Arguments
+
