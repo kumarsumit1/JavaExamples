@@ -64,9 +64,14 @@ NOTE :
 
 git merge --no-ff development
 
+# Use of "stash"
 
+command that allows you to store the modifications you’ve made in our working directory and go back to a clean working directory.
 
-
+Git stash save : saves the changes to the stash
+Git stash list : list the stash points
+Git stash pop  : merges the changes from stash to workbook and also deletes the point from Stash list
+Git stash show : command shows the summary of the stash diffs. The above command considers only the latest stash.
 
 
 
