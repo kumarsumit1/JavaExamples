@@ -1,0 +1,113 @@
+https://jakevdp.github.io/PythonDataScienceHandbook/
+
+
+https://github.com/jakevdp/sklearn_tutorial  
+
+https://www.youtube.com/watch?v=L7R4HUQ-eQ0  --> video about above git library
+
+
+https://github.com/rasbt/msu-datascience-ml-tutorial-2018
+
+How to Think like a Data Scientist
+https://runestone.academy/runestone/static/httlads/index.html
+
+•K-means clustering
+•Association rules
+•Linear regression
+•Logistic Regression
+•Naïve Bayesian classifiers
+•Decision trees
+•Time Series Analysis
+•Text Analytics
+
+-------------------
+
+Day 1: Introducing Data Science, SciKit-Learn, HDFS, Reviewing Spark apps, DataFrames and NOSQL, Reviewing Mathematics, Statistics, and Probability, HDP and HDF and Apache NiFi, and Kafka with Structured Streaming 
+
+
+DAY 1 OBJECTIVES 
+•	Discuss aspects of Data Science, the team members, and the various roles in the team 
+•	Discuss use cases for Data Science 
+•	Discuss the current State of the Art and its future direction 
+•	Review HDFS, Spark, Jupyter, and Zeppelin 
+•	Work with SciKit-Learn, Pandas, NumPy, Matplotlib, and Seaborn 
+•	Review and use Spark DataFrames and NOSQL in ETL 
+•	Review and use Apache NiFi to create and manage data flows 
+•	Review and use Spark Structured Streaming with Kafka 
+•	Review essential Mathematics, Statistics, and Probability used in ML with Zeppelin 
+
+DAY 1 LABS AND DEMONSTRATIONS 
+•	Hello, ML w/ SciKit-Learn (30 min, using Jupyter and with visualizations with Matplotlib & Seaborn) 
+•	Spark REPLs, Spark Submit, & Zeppelin Review (30 minutes, pre-built apps to be executed all 3 ways; reviews DF-functional paradigm) 
+•	HDFS Review (15-20 minutes, moving data to/from HDFS) 
+•	Spark DataFrames and Files (20-30 min, JSON, CSV, Parquet, ORC, Avro files) 
+•	Spark DataFrames and NOSQL (MariaDB, Mongo) 
+•	NiFi Review (30 minutes, essentials of moving data to/from HDFS with NiFi) 
+•	Kafka and Structured Streaming Review (30 minutes, reviewing an app that streams data from Kafka) 
+•	Essential Math Review (30 min, graphing, plotting, probability, lead in to gradient descent)  
+
+
+Day 2: Algorithms in Spark ML and SciKit-Learn: Linear Regression, Logistic Regression, Support Vectors, Decision Trees, Random Forests, KNN, Spam Classifier
+
+DAY 2 OBJECTIVES 
+•	Discuss categories and use cases of the various ML Algorithms 
+•	Understand the similarities and differences in classification and regression categories 
+•	Understand Linear Regression, Logistic Regression, and Support Vectors 
+•	Understand Decision Trees and their limitations 
+•	Understand Random Forests and Gradient Boosted Trees 
+•	Understand Nearest-Neighbors 
+•	Discuss and demonstrate a Spam Classifier  
+ 
+DAY 2 LABS AND DEMONSTRATIONS 
+•	Linear Regression as a Projection (30 min, includes visualization) 
+•	Logistic Regression (30 min, includes visualization) 
+•	Support Vectors (30 min) 
+•	Decision Trees (30 min) 
+•	Random Forests (30 min) 
+•	Linear Regression as a Classifier (30 min, includes visualization) 
+•	KNN (30 min, includes visualization) 
+•	Demo: Creating a Spam Classifier with MLlib (30 min)  
+
+Day 3: Algorithms in Spark ML and SciKit-Learn: K-Means & GMM Clustering, Essential TensorFlow, NLP with NLTK, NLP with Stanford CoreNLP, Sentiment Analysis, Dimensionality Reduction
+
+DAY 3 OBJECTIVES 
+•	Discuss and understand Clustering Algorithms 
+•	Discuss and understand Neural Networks, particularly Convolutional, Recurrent and LSTMs 
+•	Work with TensorFlow to create a basic neural network 
+•	Discuss Natural Language Processing 
+•	Compare and contrast NLTK and Stanford CoreNLP 
+•	Discuss and demonstrate Sentiment Analysis 
+• 	Discuss Dimensionality Reduction Algorithms 
+
+DAY 3 LABS AND DEMONSTRATIONS 
+•	K-Means Clustering (30 min, includes visualization) 
+•	GMM Clustering (30 min, includes visualization) 
+•	Essential TensorFlow (30 min) 
+•	NLTK 
+•	Stanford NLP 
+•	Sentiment Analysis 
+•	Dimensionality Reduction with PCA (30 min)  
+
+
+
+Day 4: Algorithms in Spark ML and SciKit-Learn: HyperParameter Tuning, K-Fold Validation, Ensemble Methods, ML Pipelines in SparkML, TensorFlow on Spark, Horovod, MLeap
+
+DAY 4 OBJECTIVES 
+•	Discuss Hyper-Parameter Tuning and K-Fold Validation 
+•	Understand Ensemble Models 
+•	Discuss ML Pipelines in Spark MLlib 
+•	Discuss ML in production and real-world issues 
+•	Demonstrate TensorFlowOnSpark 
+•	Describe real-world use cases of ML 
+
+DAY 4 LABS AND DEMONSTRATIONS 
+•	Hyper-parameter tuning (30 min, includes visualization) 
+•	K-Fold Validation (30 min) 
+•	Ensemble Methods (30 min) 
+•	ML Pipelines in SparkML (30 min) 
+•	Demo: TensorFlowOnSpark (20-30 min) 
+•	Demo: Use Cases  
+
+
+http://vision.cloudera.com/open-data-science-a-machine-learning-for-business-with-cloudera-data-science-workbench-on-hdp/
+
