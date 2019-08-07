@@ -23,6 +23,10 @@ $ git branch -r
   origin/HEAD -> origin/master
   origin/master
 
+--> disable askPass logon screen
+
+$ git config --global core.askPass ""
+
 
 1) Clone needed repository
 git clone --depth 1 -b release/0.1.1 https://github.com/Teradata/kylo.git
