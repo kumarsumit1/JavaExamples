@@ -175,6 +175,17 @@ https://iot.eclipse.org/getting-started/#sandboxes
 
 https://devopedia.org/mqtt
 
+Sample code for writing client or publisher 
+https://www.hivemq.com/blog/mqtt-client-library-paho-python/
+
+use a free online broker like ( https://iot.eclipse.org/getting-started/ ):
+
+    test.mosquitto.org
+    broker.hivemq.com
+    iot.eclipse.org
+
+
+
 #### Node Red
 ####
 
@@ -323,3 +334,10 @@ network={
 ----------------------------------
 sudo shutdown -h now (or sudo halt) OR
 sudo shutdown -r now (or sudo reboot)
+
+
+---- Supervisor ------------
+sudo supervisorctl
+/etc/supervisor/conf.d
+sudo supervisorctl reread
+sudo supervisorctl update
