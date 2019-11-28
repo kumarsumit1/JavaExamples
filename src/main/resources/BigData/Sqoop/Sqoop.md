@@ -182,6 +182,11 @@ Yes, for exporting data Procedures can be called but with following conditions.
 
 *The --export-dir argument and one of --table OR --call are required. These specify the table to populate in the database (or the stored procedure to call), and the directory in HDFS that contains the source data.*
 
+```
+--table <table-name> 		Table to populate
+--call <stored-proc-name> 	Stored Procedure to call 
+```
+
 An export that calls a stored procedure named barproc for every record in /results/bar_data would look like:
 ```
 $ sqoop export --connect jdbc:mysql://db.example.com/foo --call barproc \
@@ -198,6 +203,87 @@ Sqoop is preconfigured to map most SQL types to appropriate Java or Hive represe
 
 Use URL encoded keys and values, for example, use DECIMAL(1%2C%201) instead of DECIMAL(1, 1) for --map-column-hive
 
+### Handling null, newline character
+
+The --null-string and --null-non-string arguments are optional.\ If not specified, then the string "null" will be used.
+
+Sqoop will by default import NULL values as string null. Hive is however using string \N to denote NULL values and therefore predicates dealing with NULL (like IS NULL) will not work correctly.You should append parameters --null-string and --null-non-string in case of import job ***or --input-null-string and --input-null-non-string in case of an export job*** if you wish to properly preserve NULL values.
+```
+$ sqoop import  ... --null-string '\\N' --null-non-string '\\N'
+```
+
+The default delimiters are a comma (,) for fields, a newline (\n) for records, no quote character, and no escape character.When importing to delimited files, the choice of delimiter is important.
+
+If you do not set any delimiters and do use --hive-import, the field delimiter will be set to ^A and the record delimiter will be set to \n to be consistent with Hive’s defaults.
+
+ For example, the string "Hello, pleased to meet you" should not be imported with the end-of-field delimiter set to a comma.
+```
+Argument 							Description
+--enclosed-by <char> 				Sets a required field enclosing character
+--escaped-by <char> 				Sets the escape character
+--fields-terminated-by <char> 		Sets the field separator character
+--lines-terminated-by <char> 		Sets the end-of-line character
+--mysql-delimiters 					Uses MySQL’s default delimiter set: fields: , lines: \n escaped-by: \ optionally-enclosed-by: '
+--optionally-enclosed-by <char> 	Sets a field enclosing character 
+```
+
+NOTE :  choose unambiguous field and record-terminating delimiters without the help of escaping and enclosing characters when working with Hive; this is due to limitations of Hive’s input parsing abilities.
+
+
+### Hive import 
+
+If you do not set any delimiters and do use --hive-import, the field delimiter will be set to ^A(\001) and the record delimiter will be set to \n to be consistent with Hive’s defaults.
+
+However lets say if set --mysql-delimiters then the table definition changes accordingly.
+
+Also, If you do use --escaped-by, --enclosed-by, or --optionally-enclosed-by when importing data into Hive, Sqoop will print the following warning message.
+```
+ Hive does not support escape characters in fields; parse errors in Hive may result from using --escaped-by. Hive does not support quoted strings; parse errors in Hive may result from using --enclosed-by.
+```
+
+Hive will have problems using Sqoop-imported data if your database’s rows contain string fields that have Hive’s default row delimiters (\n and \r characters) or column delimiters (\01 characters) present in them. You can use the --hive-drop-import-delims option to drop those characters on import to give Hive-compatible text data. Alternatively, you can use the --hive-delims-replacement option to replace those characters with a user-defined string on import to give Hive-compatible text data. These options should only be used if you use Hive’s default delimiters and should not be used if different delimiters are specified.
+
+```
+--hive-drop-import-delims 	Drops \n, \r, and \01 from string fields when importing to Hive.
+--hive-delims-replacement 	Replace \n, \r, and \01 from string fields with user defined string when importing to Hive. 
+```
+	
+Hive can put data into partitions for more efficient query performance. You can tell a Sqoop job to import data for Hive into a particular partition by specifying the --hive-partition-key and --hive-partition-value arguments. ***The partition value must be a string.***	
+
+```
+ $SQOOP_HOME/bin/sqoop import \
+ --connect jdbc:mysql://quickstart.cloudera:3306/retail_db \
+ --username root \
+ --password cloudera \
+ --hive-import --table students \
+ --hive-table "DEMO2" --columns stid,firstname \
+ --hive-partition-key 'COUNTRY' \
+ --hive-partition-value 'INDIA' \
+ --m 1 --verbose \
+ --delete-target-dir
+ ```
+
+### Hive Export
+The --input-null-string and --input-null-non-string arguments are optional. If --input-null-string is not specified, then the string "null" will be interpreted as null for string-type columns. If --input-null-non-string is not specified, then both the string "null" and the empty string will be interpreted as null for non-string columns. Note that, the empty string will be always interpreted as null for non-string columns, in addition to other string if specified by --input-null-non-string.
+
+Since Sqoop breaks down export process into multiple transactions, it is possible that a failed export job may result in partial data being committed to the database. This can further lead to subsequent jobs failing due to insert collisions in some cases, or lead to duplicated data in others. You can overcome this problem by specifying a ***staging table*** via the --staging-table option which acts as an auxiliary table that is used to stage exported data. The staged data is finally moved to the destination table in a single transaction.
+
+***In order to use the staging facility***, you must create the staging table prior to running the export job. This table must be structurally identical to the target table. This table should either be empty before the export job runs, or the --clear-staging-table option must be specified. If the staging table contains data and the --clear-staging-table option is specified, Sqoop will delete all of the data before starting the export job.
+
+```
+--staging-table <staging-table-name> 	The table in which data will be staged before being inserted into the destination table.
+--clear-staging-table 					Indicates that any data present in the staging table can be deleted. 
+```	
+
+If an UPDATE statement modifies no rows, this is not considered an error; the export will silently continue. 
+Likewise, if the column specified with --update-key does not uniquely identify rows and multiple rows are updated by a single statement, this condition is also undetected.
+
+Use --update-mode argument with allowinsert mode if you want to update rows if they exist in the database already or insert rows if they do not exist yet.
+```
+--update-key <col-name> 	Anchor column to use for updates. Use a comma separated list of columns if there are more than one column.
+--update-mode <mode> 		Specify how updates are performed when new rows are found with non-matching keys in database.
+							Legal values for mode include updateonly (default) and allowinsert. 
+```
 	
 https://medium.com/datadriveninvestor/incremental-data-load-using-apache-sqoop-3c259308f65c
 

@@ -1,0 +1,153 @@
+https://www.infrastructure.aws/
+
+https://calculator.aws
+
+
+
+--> placement group
+
+--> roles are given to a service such as EC2 , Lambda and each service has various policy  with can be tweaked and can be grouped to roles.
+
+
+
+
+https://connect2mukesh.signin.aws.amazon.com/console
+
+id sumit
+
+
+
+ssh -i /path/my-key-pair.pem ec2-user@18.218.101.106
+
+
+
+sumit
+-----------------
+S3 --> Anything going in S3 is not charged
+   --> within region/AZ data is not charged for movement but between region the data is charged
+   --> since creates a url so the name should be unique
+   --> For CRR versioning should be enabled
+   -->
+https://testsumitbucket.s3.us-east-2.amazonaws.com/feed.json
+
+https://calculator.s3.amazonaws.com/index.html
+
+EC2
+
+--> secondary private IP : it can be detached from one CPU to another. ( Majorly used in Teradata, when a node fails then secondary IP is assigned to anoter node )
+--> EC2 billing is done on hourly baisis. so if you stop and start within 1 hour you will be charged for one hour. but if you restart then the same timining continues.
+--> If you terminate an instance then data on volumes also gets lost.
+
+--> Auto Scaling  : To stop auto scaled cluster, first delete the auto scale group
+--> Scale on Demand  :  (scale-in means scale down )
+
+
+
+sudo ssh -i sumitoct.pem ec2-user@18.218.101.106
+
+ping 54.172.219.255
+
+
+Cloudwatch :
+
+
+
+
+AWS SDK :
+https://aws.amazon.com/tools/
+
+https://aws.amazon.com/visualstudiocode/
+
+
+
+curl -O https://bootstrap.pypa.io/get-pip.py
+pip3 install awscli --upgrade --user
+
+aws --version
+
+aws configure   //It asks to configure aws
+
+AWS Access Key ID 
+AWS Secret Access Key 
+Default region name      //The region is what you get in S3 bucket url name ie. us-east-2
+Default output format 
+
+This will create a .aws folder in the home folder and store the credential there.
+
+
+Or ( Preferred WAY )
+
+IAM roles can be attached to EC2 instance in that case you do not need to "configure" the AWS cli.
+
+
+AWS CLI commands:
+
+--> Prefer aws sync than cp
+
+
+https://riptutorial.com/amazon-s3/example/22757/aws-cli-s3-commands-list
+
+
+-------------------------
+VPC
+
+https://aws.amazon.com/blogs/apn/the-5-pillars-of-the-aws-well-architected-framework/
+
+
+IPv4 --> 32 bit
+192.168.0.0/16  --> CIDR
+
+left part is network / right part is hosts
+
+32-16 = 16 i.e 2 to power 16 hosts are available
+
+192.168.0.0/24  --> CIDR
+
+32-24 = 8 i.e 2 to power 8 hosts are available  , out of these few are reserved by AWS (5 as of now) hence instead of 256 only 251 hosts will be available.
+
+You cannot specify an IPv4 CIDR block larger than /16
+
+
+141.206.243.10/32 --> will mean only one IP is allowed
+
+Create a VPC
+
+create  subnet
+  create subnets
+create a internet gateway
+  create a route table associate the internet gateway and associate the subnet you want to give internet access to
+      
+When you launch a EC2 make sure that you enable "Auto-assign Public IP"  while configuring.
+
+bastion/jumper server --> We can create bastion/jumper server (i.e server that has internet access) and login to bastion server and then ssh to private instances using their private IPs.
+
+OR use 
+
+NAT gateway --> to use internet on private instance when we dont want to give internet access to private instances.	 
+
+Diff between NAT Gateway vs Internet Gateway
+ 
+ 
+VPC peering (Peering connection) : For connecting with other networks or clients infrastructure
+  Limitation : 
+      No overlap between CIDR range.
+  	  
+	  
+  Steps:
+    Create peering connections and accept the request
+    Edit route table to add IP range
+    Update NACL to add IP range for traffic flow
+    Update Security Group for IP range for traffic flow 
+
+
+NOTE : from subnet you can figure out if the system has internet acess as in route table there will be an entry of igw--(internet gateway)
+
+Private Link ( Endpoint Service ) : Overcomes limitations of VPC peering 
+      
+VPN : Same limitations as VPC peering
+
+Dedicated Connections (DC) :  	
+
+
+--------------
+https://www.whizlabs.com/aws-solutions-architect-associate/practice-tests/

@@ -45,7 +45,7 @@ sqoop import-all-tables \
   --hive-overwrite \
   --create-hive-table 
 
-# Import all tables from mysql to hive in a SPECIFIC database using sqoop in normal format (VERY NEW COMMAND. NOT WORKING IN UDACITY TRAINING VM)
+# Import all tables from mysql to hive in a SPECIFIC database using sqoop in normal format ( NEW COMMAND )
 sqoop import-all-tables \
   --num-mappers 1 \
   --connect "jdbc:mysql://quickstart.cloudera:3306/retail_db" \

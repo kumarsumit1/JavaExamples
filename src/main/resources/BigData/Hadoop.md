@@ -1,4 +1,12 @@
 #Hadoop
+https://hadoop.apache.org/docs/r3.0.0/index.html
+https://www.edureka.co/blog/hadoop-3/
+https://www.dezyre.com/article/getting-to-know-hadoop-3-0-features-and-enhancements-/354
+https://data-flair.training/blogs/what-is-new-in-hadoop-3/
+
+https://www.youtube.com/watch?v=LUOC2G3BX7E
+
+https://www.youtube.com/watch?v=scM_WQMhB3A
 
 ##HDFS
 
