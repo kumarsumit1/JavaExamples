@@ -11,11 +11,10 @@ https://www.youtube.com/watch?v=scM_WQMhB3A
 ##HDFS
 
 ### HDFS Components
-> Data Node
 > Name Node
 > Secondry Name Node
 > Stadby Name Node
-
+> Data Node
 ### NameNode High Availability
 NameNode HA gives following benefit:
 >Hot Standby: Both Active and Standby NameNodes have up to date HDFS metadata, ensuring seamless failover even for large clusters – which means no downtime for your cluster!
@@ -179,6 +178,8 @@ https://www.datadoghq.com/blog/monitor-hadoop-metrics-datadog/
 
 ###File Formats
 
+https://dzone.com/articles/big-data-file-formats-explained
+
 https://blog.cloudera.com/blog/2017/02/performance-comparing-of-different-file-formats-and-storage-engines-in-hadoop-file-system/
 
 https://community.hortonworks.com/questions/174054/between-avro-parquet-and-rcorc-which-is-useful-for.html
@@ -188,14 +189,22 @@ https://community.hortonworks.com/articles/231664/hive-table-compression-bz2-vs-
 
 https://community.hortonworks.com/questions/174054/between-avro-parquet-and-rcorc-which-is-useful-for.html
 
+CSV
+
+
+JSON
+
+
 1. Avro
 
 • Widely used as a serialization platform 
+• It has a direct mapping to and from JSON
 • Row-based, offers a compact and fast binary format 
-• Schema is encoded on the file so the data can be untagged 
-In the avro format, we store schema separately from data. Generally avro schema file (.avsc) is maintained.
+• It has a rich, extensible schema language defined in pure JSON,Schema is encoded on the file so the data can be untagged.
+• In the avro format, we store schema separately from data. Generally avro schema file (.avsc) is maintained.
+• It has a very compact format. The bulk of JSON, repeating every field name with every single record, is what makes JSON inefficient for high-volume usage.
 • Files support block compression and are splittable 
-• Supports schema evolution 
+• It has the best notion of compatibility for evolving your data over time. 
     Avro supports addition and deletion of columns at any position.
     Avro supports changing column names via changing the aliases.
     Avro does not support data type changes.
@@ -203,6 +212,9 @@ In the avro format, we store schema separately from data. Generally avro schema 
 Avro is very useful at sourcing layer in Data Lake beause
 1. Since data/schema can change which is best supported by Avro
 2. ORC/Parquet at the data sourcing layer is not possible as usually they are text files
+
+Promoted by :
+  Kafka
 
 https://dzone.com/articles/convert-csv-data-avro-data
 
@@ -217,6 +229,9 @@ https://kitmenke.com/blog/2017/01/16/creating-an-avro-table-in-hive-automaticall
 • Splittable: allows parallel processing of row collections 
 • It comes with basic statistics on columns (min ,max, sum, and count) 
 
+Promoted by :
+    Hortonworks,Hive
+
 https://www.slideshare.net/Hadoop_Summit/orc-file-optimizing-your-big-data
 
 
@@ -225,6 +240,15 @@ https://www.slideshare.net/Hadoop_Summit/orc-file-optimizing-your-big-data
 • Uses the record shredding and assembly algorithm described in the Dremel paper • Each data file contains the values for a set of rows 
 • Efficient in terms of disk I/O when specific columns need to be queried 
 
+Promoted by :
+    Cloudera,Spark
+
+
 ![FileFormatComparison](HadoopFileFormats.png)
 
 https://www.datanami.com/2018/05/16/big-data-file-formats-demystified/
+
+
+Final Comparison
+
+![Final comaprison] (Hadoop-format-comparition.png)
