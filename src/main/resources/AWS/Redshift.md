@@ -4,7 +4,7 @@ It is essentially a MPP based Postgres SQL.
 Performance Tips :
 https://aws.amazon.com/blogs/big-data/top-10-performance-tuning-techniques-for-amazon-redshift/
 
-# CREATE TABLE
+## CREATE TABLE
 **Topics**
 - Syntax
 - Parameters
@@ -12,7 +12,7 @@ https://aws.amazon.com/blogs/big-data/top-10-performance-tuning-techniques-for-a
   
 Creates a new table in the current database. The owner of this table is the user of the CREATE TABLE command.
 
-## Syntax
+### Syntax
 
 ```
 CREATE [ [LOCAL ] { TEMPORARY | TEMP } ] TABLE 
@@ -49,7 +49,7 @@ and table_attributes are:
   [ [COMPOUND | INTERLEAVED ] SORTKEY ( column_name [, ...] ) ]
 ```
 
-## Parameters
+### Parameters
 
 LOCAL   
 Optional. Although this keyword is accepted in the statement, it has no effect in Amazon Redshift.
@@ -165,60 +165,102 @@ Keyword that specifies that the column is the sort key for the table. When data 
 Specifies one or more sort keys for the table. When data is loaded into the table, the data is sorted by the columns that are designated as sort keys. 
 - You can use the SORTKEY keyword after a column name to specify a single-column sort key, or you can specify one or more columns as sort key columns for the table by using the `SORTKEY (column_name [ , ... ] )` syntax.   
 - You can optionally specify COMPOUND or INTERLEAVED sort style. The default is COMPOUND.   
-- If you don't specify any sort keys, the table isn't sorted by default. You can define a maximum of 400 COMPOUND SORTKEY columns or 8 INTERLEAVED SORTKEY columns per table.     
-COMPOUND  
-Specifies that the data is sorted using a compound key made up of all of the listed columns, in the order they are listed\. A compound sort key is most useful when a query scans rows according to the order of the sort columns\. The performance benefits of sorting with a compound key decrease when queries rely on secondary sort columns\. You can define a maximum of 400 COMPOUND SORTKEY columns per table\.   
-INTERLEAVED  
-Specifies that the data is sorted using an interleaved sort key\. A maximum of eight columns can be specified for an interleaved sort key\.   
-An interleaved sort gives equal weight to each column, or subset of columns, in the sort key, so queries don't depend on the order of the columns in the sort key\. When a query uses one or more secondary sort columns, interleaved sorting significantly improves query performance\. Interleaved sorting carries a small overhead cost for data loading and vacuuming operations\.   
-Don’t use an interleaved sort key on columns with monotonically increasing attributes, such as identity columns, dates, or timestamps\.
-
-
-
-
-
-
-NOT NULL \| NULL   
-NOT NULL specifies that the column isn't allowed to contain null values\. NULL, the default, specifies that the column accepts null values\. IDENTITY columns are declared NOT NULL by default\.
+- If you don't specify any sort keys, the table isn't sorted by default. You can define a maximum of 400 COMPOUND SORTKEY columns or 8 INTERLEAVED SORTKEY columns per table.
+- COMPOUND  
+  - Specifies that the data is sorted using a compound key made up of all of the listed columns, in the order they are listed. 
+  - A compound sort key is most useful when a query scans rows according to the order of the sort columns. 
+  - The performance benefits of sorting with a compound key decrease when queries rely on secondary sort columns. 
+  - You can define a maximum of 400 COMPOUND SORTKEY columns per table.   
+- INTERLEAVED  
+  - Specifies that the data is sorted using an interleaved sort key. 
+  - A maximum of eight columns can be specified for an interleaved sort key.
+  - An interleaved sort gives equal weight to each column, or subset of columns, in the sort key, so queries don't depend on the order of the columns in the sort key. 
+  - When a query uses one or more secondary sort columns, interleaved sorting significantly improves query performance. 
+  - Interleaved sorting carries a small overhead cost for data loading and vacuuming operations.
+  - Don’t use an interleaved sort key on columns with monotonically increasing attributes, such as identity columns, dates, or timestamps.
 
 UNIQUE  
-Keyword that specifies that the column can contain only unique values\. The behavior of the unique table constraint is the same as that for column constraints, with the additional capability to span multiple columns\. To define a unique table constraint, use the UNIQUE \( *column\_name* \[, \.\.\. \] \) syntax\.  
-Unique constraints are informational and aren't enforced by the system\.
+Keyword that specifies that the column can contain only unique values. The behavior of the unique table constraint is the same as that for column constraints, with the additional capability to span multiple columns. To define a unique table constraint, use the UNIQUE ( *column_name* [, ... ] ) syntax.  
+***Unique constraints are informational and aren't enforced by the system.***
+
+UNIQUE ( *column_name* [, ...] )  
+Constraint that specifies that a group of one or more columns of a table can contain only unique values. The behavior of the unique table constraint is the same as that for column constraints, with the additional capability to span multiple columns. ***In the context of unique constraints, null values aren't considered equal.*** Each unique table constraint must name a set of columns that is different from the set of columns named by any other unique or primary key constraint defined for the table.
+***Unique constraints are informational and aren't enforced by the system.***
 
 PRIMARY KEY  
-Keyword that specifies that the column is the primary key for the table\. Only one column can be defined as the primary key by using a column definition\. To define a table constraint with a multiple\-column primary key, use the PRIMARY KEY \( *column\_name* \[, \.\.\. \] \) syntax\.  
-Identifying a column as the primary key provides metadata about the design of the schema\. A primary key implies that other tables can rely on this set of columns as a unique identifier for rows\. One primary key can be specified for a table, whether as a column constraint or a table constraint\. The primary key constraint should name a set of columns that is different from other sets of columns named by any unique constraint defined for the same table\.  
-Primary key constraints are informational only\. They aren't enforced by the system, but they are used by the planner\.
+Keyword that specifies that the column is the primary key for the table. Only one column can be defined as the primary key by using a column definition. To define a table constraint with a multiple-column primary key, use the PRIMARY KEY ( *column_name* [, ... ] ) syntax.  
+***Primary key constraints are informational only. They aren't enforced by the system, but they are used by the planner.***
 
-References *reftable* \[ \( *refcolumn* \) \]  
-Clause that specifies a foreign key constraint, which implies that the column must contain only values that match values in the referenced column of some row of the referenced table\. The referenced columns should be the columns of a unique or primary key constraint in the referenced table\.   
- Foreign key constraints are informational only\. They aren't enforced by the system, but they are used by the planner\. 
+References *reftable* [ ( *refcolumn* ) ]  
+Clause that specifies a foreign key constraint, which implies that the column must contain only values that match values in the referenced column of some row of the referenced table. The referenced columns should be the columns of a unique or primary key constraint in the referenced table.   
+***Foreign key constraints are informational only. They aren't enforced by the system, but they are used by the planner.***
 
-LIKE *parent\_table* \[ \{ INCLUDING \| EXCLUDING \} DEFAULTS \]   <a name="create-table-like"></a>
-A clause that specifies an existing table from which the new table automatically copies column names, data types, and NOT NULL constraints\. The new table and the parent table are decoupled, and any changes made to the parent table aren't applied to the new table\. Default expressions for the copied column definitions are copied only if INCLUDING DEFAULTS is specified\. The default behavior is to exclude default expressions, so that all columns of the new table have null defaults\.   
-Tables created with the LIKE option don't inherit primary and foreign key constraints\. Distribution style, sort keys,BACKUP, and NULL properties are inherited by LIKE tables, but you can't explicitly set them in the CREATE TABLE \.\.\. LIKE statement\.
+FOREIGN KEY ( *column_name* [, ... ] ) REFERENCES *reftable* [ ( *refcolumn* ) ]   
+Constraint that specifies a foreign key constraint, which requires that a group of one or more columns of the new table must only contain values that match values in the referenced column(s) of some row of the referenced table. If *refcolumn* is omitted, the primary key of *reftable* is used. The referenced columns must be the columns of a unique or primary key constraint in the referenced table.  
+***Foreign key constraints are informational only. They aren't enforced by the system, but they are used by the planner.***
 
-BACKUP \{ YES \| NO \}   <a name="create-table-backup"></a>
-A clause that specifies whether the table should be included in automated and manual cluster snapshots\. For tables, such as staging tables, that don't contain critical data, specify BACKUP NO to save processing time when creating snapshots and restoring from snapshots and to reduce storage space on Amazon Simple Storage Service\. The BACKUP NO setting has no effect on automatic replication of data to other nodes within the cluster, so tables with BACKUP NO specified are restored in a node failure\. The default is BACKUP YES\.
+LIKE *parent_table* [ { INCLUDING | EXCLUDING } DEFAULTS ]   
+A clause that specifies an existing table from which the new table automatically copies column names, data types, and NOT NULL constraints. 
+- The new table and the parent table are decoupled, and any changes made to the parent table aren't applied to the new table. 
+- The default behavior is to exclude default expressions, so that all columns of the new table have null defaults.   
+- Default expressions for the copied column definitions are copied only if INCLUDING DEFAULTS is specified. 
+- Tables created with the LIKE option don't inherit primary and foreign key constraints. 
+- Distribution style, sort keys,BACKUP, and NULL properties are inherited by LIKE tables, but you can't explicitly set them in the CREATE TABLE ... LIKE statement.
 
-
-
-UNIQUE \( *column\_name* \[,\.\.\.\] \)  
-Constraint that specifies that a group of one or more columns of a table can contain only unique values\. The behavior of the unique table constraint is the same as that for column constraints, with the additional capability to span multiple columns\. In the context of unique constraints, null values aren't considered equal\. Each unique table constraint must name a set of columns that is different from the set of columns named by any other unique or primary key constraint defined for the table\.   
- Unique constraints are informational and aren't enforced by the system\. 
-
-PRIMARY KEY \( *column\_name* \[,\.\.\.\] \)  
-Constraint that specifies that a column or a number of columns of a table can contain only unique \(nonduplicate\) non\-null values\. Identifying a set of columns as the primary key also provides metadata about the design of the schema\. A primary key implies that other tables can rely on this set of columns as a unique identifier for rows\. One primary key can be specified for a table, whether as a single column constraint or a table constraint\. The primary key constraint should name a set of columns that is different from other sets of columns named by any unique constraint defined for the same table\.   
- Primary key constraints are informational only\. They aren't enforced by the system, but they are used by the planner\. 
-
-FOREIGN KEY \( *column\_name* \[, \.\.\. \] \) REFERENCES *reftable* \[ \( *refcolumn* \) \]   
-Constraint that specifies a foreign key constraint, which requires that a group of one or more columns of the new table must only contain values that match values in the referenced column\(s\) of some row of the referenced table\. If *refcolumn* is omitted, the primary key of *reftable* is used\. The referenced columns must be the columns of a unique or primary key constraint in the referenced table\.  
-Foreign key constraints are informational only\. They aren't enforced by the system, but they are used by the planner\.
+BACKUP { YES | NO }   
+A clause that specifies whether the table should be included in automated and manual cluster snapshots. For tables, such as staging tables, that don't contain critical data, specify BACKUP NO to save processing time when creating snapshots and restoring from snapshots and to reduce storage space on Amazon Simple Storage Service. The BACKUP NO setting has no effect on automatic replication of data to other nodes within the cluster, so tables with BACKUP NO specified are restored in a node failure. ***The default is BACKUP YES.***
 
 
+## Maintainance Commands
+
+### Analyze
+    The ANALYZE operation updates the statistical metadata that the query planner uses to choose optimal plans. 
+    
+    In most cases, you don't need to explicitly run the ANALYZE command. Amazon Redshift monitors changes to your workload and automatically updates statistics in the background. In addition, the COPY command performs an analysis automatically when it loads data into an empty table.
+
+To explicitly analyze a table or the entire database, run the ANALYZE command. 
+
+### Vacuum
+    Re-sorts rows and reclaims space in either a specified table or all tables in the current database. 
+    Amazon Redshift automatically sorts data and runs VACUUM DELETE in the background. This lessens the need to run the VACUUM command. 
+    Users can access tables while they are being vacuumed. You can perform queries and write operations while a table is being vacuumed, but when data manipulation language (DML) commands and a vacuum run concurrently, both might take longer. If you execute UPDATE and DELETE statements during a vacuum, system performance might be reduced. VACUUM DELETE temporarily blocks update and delete operations. 
+
+    
+``` Syntax   
+VACUUM [ FULL | SORT ONLY | DELETE ONLY | REINDEX ] 
+[ [ table_name ] [ TO threshold PERCENT ] [ BOOST ] ]
+```
+
+## Misc Commands
+
+### COPY
+    Loads data into a table from data files or from an Amazon DynamoDB table. The files can be located in an Amazon Simple Storage Service (Amazon S3) bucket, an Amazon EMR cluster, or a remote host that is accessed using a Secure Shell (SSH) connection. The simplest COPY command uses the following format.
+```
+    COPY table-name 
+    FROM data-source
+    authorization;
+```
+
+
+    An anti-pattern is to insert data directly into Amazon Redshift, with single record inserts or the use of a multi-value INSERT statement. This allows you to insert up to 16 MB of data at one time. These are leader node–based operations and can create performance bottlenecks by maxing out the leader node network as the leader distributes the data to the compute nodes.
+
+  - The COPY command appends the new input data to any existing rows in the table.
+  - Amazon Redshift Spectrum external tables are read-only. You can't COPY to an external table. 
+### UNLOAD
+    Unloads the result of a query to one or more text or Apache Parquet files on Amazon S3, using Amazon S3 server-side encryption (SSE-S3). 
+
+    Amazon Redshift can export SQL statement output to S3 in a massively parallel fashion. This technique greatly improves the export performance and lessens the impact of running the data through the leader node. You can compress the exported data on its way off the Amazon Redshift cluster. As the size of the output grows, so does the benefit of using this feature.
+
+## Tools
+
+### Amazon Redshift Advisor
+
+### Amazon Redshift Spectrum
+
+### workload management (WLM) Queues
 
 ----------------------------------------------------------------------------------------------------------
-#Snowflake vs. Redshift ( https://www.stitchdata.com/resources/snowflake-vs-redshift/ )
+# [ Snowflake vs. Redshift ](https://www.stitchdata.com/resources/snowflake-vs-redshift/)
 
 How do these two cloud data warehouse solutions compare? Here's a quick guide:
 
