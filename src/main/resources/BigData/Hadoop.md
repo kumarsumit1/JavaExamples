@@ -105,6 +105,16 @@ A Namespace and its block pool together are called Namespace Volume. It is a sel
 
 ### HDFS commands
 
+- hdfs dfsadmin -report 			: List all the datanode IP and details etc
+- hdfs getconf -namenodes 			: gets list of namenodes in the cluster.
+- hdfs getconf -secondaryNameNodes  : gets list of secondary namenodes in the cluster.
+- hdfs getconf -confKey <Key> 		: gets a specific key from the configuration. For e.g hdfs getconf -confKey fs.defaultFS : lists 
+
+###Ports 
+https://ambari.apache.org/1.2.3/installing-hadoop-using-ambari/content/reference_chap2_1.html
+https://ambari.apache.org/1.2.3/installing-hadoop-using-ambari/content/reference_chap2_2.html
+https://issues.apache.org/jira/browse/HDFS-9427
+
 
 ## YARN
 
@@ -203,6 +213,7 @@ JSON
 • It has a rich, extensible schema language defined in pure JSON,Schema is encoded on the file so the data can be untagged.
 • In the avro format, we store schema separately from data. Generally avro schema file (.avsc) is maintained.
 • It has a very compact format. The bulk of JSON, repeating every field name with every single record, is what makes JSON inefficient for high-volume usage.
+• Stores the schema in the header of file so data is self-describing.
 • Files support block compression and are splittable 
 • It has the best notion of compatibility for evolving your data over time. 
     Avro supports addition and deletion of columns at any position.
@@ -211,10 +222,18 @@ JSON
 
 Avro is very useful at sourcing layer in Data Lake beause
 1. Since data/schema can change which is best supported by Avro
-2. ORC/Parquet at the data sourcing layer is not possible as usually they are text files
+2. Write heavy tasks or OLTP tasks
+3. For streaming solutions too use Avro instead of Parquet or ORC
 
 Promoted by :
   Kafka
+
+
+
+Schema Evolution in avro-backed Hive Table  https://www.youtube.com/watch?v=dCn1_de448E
+Kafka Tutorial Schema Evolution Part 1  https://www.youtube.com/watch?v=1OdsRuKXWbM
+
+https://docs.oracle.com/database/nosql-11.2.2.0/GettingStartedGuide/schemaevolution.html
 
 https://dzone.com/articles/convert-csv-data-avro-data
 
@@ -228,6 +247,7 @@ https://kitmenke.com/blog/2017/01/16/creating-an-avro-table-in-hive-automaticall
 • Introduces a lightweight indexing that enables skipping of irrelevant blocks of rows 
 • Splittable: allows parallel processing of row collections 
 • It comes with basic statistics on columns (min ,max, sum, and count) 
+• Apache ORC might be better if your file-structure is flattened or non-nested structure with fewer columns
 
 Promoted by :
     Hortonworks,Hive
@@ -237,7 +257,8 @@ https://www.slideshare.net/Hadoop_Summit/orc-file-optimizing-your-big-data
 
 3. Parquet
 • Column-oriented binary file format 
-• Uses the record shredding and assembly algorithm described in the Dremel paper • Each data file contains the values for a set of rows 
+• Parquet might be better if you have highly nested data, because it stores its elements as a tree like Google Dremel does 
+• Each data file contains the values for a set of rows 
 • Efficient in terms of disk I/O when specific columns need to be queried 
 
 Promoted by :
