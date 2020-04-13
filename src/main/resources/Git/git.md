@@ -74,16 +74,22 @@ command that allows you to store the modifications you’ve made in our working 
 
 Git stash save : saves the changes to the stash
 Git stash list : list the stash points
-Git stash pop  : merges the changes from stash to workbook and also deletes the point from Stash list
 Git stash show : command shows the summary of the stash diffs. The above command considers only the latest stash.
+Git stash pop  : merges the changes from stash to workbook and also deletes the point from Stash list
+Git stash apply: merges the changes from stash to workbook but do not delete the point from stash. `git stash pop` is `git stash apply` && `git stash drop`
 
+## To Fix merge issues while pulling from origin
+
+git stash 
+git pull origin master : 
+git diff stash@{0}     : compare stash with working copy
+git stash apply        : merges with working directory, perform manual merging
+git add/commit/push  
 
 
 Introduction to Git - Core Concepts  https://www.youtube.com/watch?v=uR6G2v_WsRA
 Introduction to Git - Branching and Merging    https://www.youtube.com/watch?v=FyAAIHHClqI
 Introduction to Git - Remotes  https://www.youtube.com/watch?v=Gg4bLk8cGNo
-
-
 
 
 
