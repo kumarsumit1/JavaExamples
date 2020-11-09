@@ -27,8 +27,15 @@ https://www.youtube.com/watch?v=Y6Ev8GIlbxc
 
 https://medium.com/swlh/cap-theorem-in-distributed-systems-edd967e7bdf4
 
+### PACELC (pass-elk) theorem
+It highlights how CAP theorm only talks about failures .
 
+A more complete portrayal of the space of potential consistency tradeoffs for DDBSs can be achieved by rewriting CAP 
+as PACELC (pronounced “pass-elk”): if there is a partition (P), how does the system trade off availability and
+consistency (A and C); else (E), when the system is running normally in the absence of partitions, how does the 
+system trade off latency (L) and consistency (C)? 
 
+https://www.cs.umd.edu/~abadi/papers/abadi-pacelc.pdf
 
 ## SCD: Slowly changing dimensions
 

@@ -1,4 +1,11 @@
  “Quick Sort is pretty much what runs all of the internet”.
+ 
+ https://www.youtube.com/watch?v=YOfXMQnUlZY --> 3 hours Data structures
+ 
+ 
+ https://www.youtube.com/playlist?list=PLzZR2BJ8ICYvwTZzp-VEA2mvrVrsMCFt9  --> Sorting algos
+ 
+ 
  https://www.youtube.com/playlist?list=PLDN4rrl48XKpZkf03iYFl-O29szjTrs_O
  
  https://runestone.academy/runestone/static/pythonds/index.html

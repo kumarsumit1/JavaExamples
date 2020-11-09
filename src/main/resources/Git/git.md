@@ -1,3 +1,61 @@
+
+Git is a "three Tree structure" i.e 
+repository
+staging index
+working directory
+
+
+
+-------------------  UNDO Changes ----------------------------------
+# Undo Working directory changes
+
+git checkout -- <File.name>
+
+git checkout -- .   #Undos all the changes in the workspace
+
+The above command will fetch the file from current branch and overwrite in current folder
+
+git checkout <branch> <file.name>
+
+this will overwrite taking file from named branch to current workspace
+
+
+# Unstage Files
+
+git reset HEAD <fileName>
+
+Undo changes to previous commit point 
+
+# Ammend Commits
+
+git commit --ammend -m "New commit message"
+
+It megers the current commit with previous one. And in the process it deletes the previous SHA and creates a new one. So in total we still have one commit 
+
+note : One can use it to "even" change a commit message using above command  
+
+# Retrive old commits
+
+it needs to be noted that git commits records in chains, so in order to undo a commit its better to make new commit that has changes undoing the previous commit
+
+git checkout <commit SHA> -- <fileName>
+
+This will checkout the changes of that commit point in current workspace 
+
+Now make changes and commit them again
+
+
+# Revert changes 
+
+git revert SHA 
+
+reverts commit point to previous commit point by creating a new commit undoing the previous changes.
+
+
+Note : In all these methods a new commit point gets created with reverted changes 
+
+
+--------------------------------------------------------
 git config --global --list
 
 --> list all the configuration at global level

@@ -1,0 +1,17 @@
+
+
+
+https://www.youtube.com/playlist?list=PLp_fsLj4v7gTA8n2UngXfOc_5puPPmFdK
+And its examples on katacoda:
+https://www.katacoda.com/ranand12/scenarios/podsinplainenglish
+
+
+
+
+# Translate a Docker Compose File to Kubernetes Resources
+
+https://kubernetes.io/docs/tasks/configure-pod-container/translate-compose-kubernetes/
+https://kompose.io/
+
+Or one can directly deploy to Kubernetes from docker using docker-compose
+https://www.docker.com/blog/simplifying-kubernetes-with-docker-compose-and-friends/
