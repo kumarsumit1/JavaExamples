@@ -31,7 +31,7 @@ public class TryCatch {
 		//return "last";
 	}
 }
-//Condition 1 . Only one return statement is allowed withing try block and in the main block i.e if return is in try block then return in main block will not be allowed.
+//Condition 1 . Only one return statement is allowed within try block and in the main block i.e if return is in try block then return in main block will not be allowed.
 //               Will throw code unreachable error
 //Condition 2 . return in both try and finally is allowed but with a warning and the return of finally will get called before exiting the program.
 //Condition 3 . if return is in try,catch,finally then the return of finally will get called before exiting.
