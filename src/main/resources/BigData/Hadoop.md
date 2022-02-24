@@ -36,13 +36,13 @@ Active and Standby NameNode configuration can be done in following two ways:
 - During failover, the StandbyNode makes sure that it has updated its meta data information from the JournalNodes before becoming the new Active NameNode. This makes the current namespace state synchronized with the state before failover.
 - The IP Addresses of both the NameNodes are available to all the DataNodes and they send their heartbeats and block location information to both the NameNode. This provides a fast failover (less down time) as the StandbyNode has an updated information about the block location in the cluster. [QJM Design](https://hortonworks.com/blog/namenode-high-availability-in-hdp-2-0/)
 
-![QJM High Availability](NameNodeHA.png)
+![QJM High Availability](big_data\NameNodeHA.png)
 
 ##### 2. Using Shared Storage:
 - The StandbyNode and the active NameNode keep in sync with each other by using a shared storage device. The active NameNode logs the record of any modification done in its namespace to an EditLog present in this shared storage. The StandbyNode reads the changes made to the EditLogs in this shared storage and applies it to its own namespace.
 - Now, in case of failover, the StandbyNode updates its metadata information using the EditLogs in the shared storage at first. Then, it takes the responsibility of the Active NameNode. This makes the current namespace state synchronized with the state before failover. [Shared Storage Design](https://www.slideshare.net/cloudera/hadoop-world-2011-hdfs-name-node-high-availablity-aaron-myers-cloudera-sanjay-radia-hortonworks)
 
-![Shared Storage High Availability](Shared-Storage-HDFS-HA-Architecture.png)
+![Shared Storage High Availability](big_data\Shared-Storage-HDFS-HA-Architecture.png)
 
 
 Shared storage on NFS was practical for some organizations, but difficult for others beacuse of :
@@ -81,7 +81,7 @@ It is desirable for correctness of the system that only one NameNode be in the A
 ### HDFS Federation
 Issues in previous design
 
-![HDFS Design](HDFS_Federation_PNG.png)
+![HDFS Design](big_data\HDFS_Federation_PNG.png)
 
 
 >Namespace scalability : While HDFS cluster storage scales horizontally with the addition of datanodes, the namespace does not. Currently the namespace can only be vertically scaled on a single namenode.  The namenode stores the entire file system metadata in memory. This limits the number of blocks, files, and directories supported on the file system to what can be accommodated in the memory of a single namenode.
@@ -98,7 +98,7 @@ A ***Block Pool*** is a set of blocks that belong to a single namespace. Datanod
 
 A Namespace and its block pool together are called Namespace Volume. It is a self-contained unit of management. When a namenode/namespace is deleted, the corresponding block pool at the datanodes is deleted. 
 
-![HDFS FEDERATION](HDFS_Federation_PNG2.png)
+![HDFS FEDERATION](big_data\HDFS_Federation_PNG2.png)
 
 
 #### HDFS Snapshots
@@ -139,7 +139,7 @@ Like HDFS, YARN uses a similar, ZooKeeper-managed lock to ensure only one Resour
 ###### ResourceManager HA in YARN
 ***ResourceManager HA*** is realized through an Active/Standby architecture.
 
-![ResourceManager HA ](hadoop-resource-manager-ha.png)
+![ResourceManager HA ](big_data\hadoop-resource-manager-ha.png)
 
 At any point of time, one of the RMs is Active, and other standby node is waiting to take over if Active RM fails.
 
@@ -206,7 +206,7 @@ JSON
 
 
 1. Avro
-
+https://gist.github.com/meatcar/081f9c852928934a7029
 • Widely used as a serialization platform 
 • It has a direct mapping to and from JSON
 • Row-based, offers a compact and fast binary format 
@@ -256,6 +256,9 @@ https://www.slideshare.net/Hadoop_Summit/orc-file-optimizing-your-big-data
 
 
 3. Parquet
+
+https://www.youtube.com/watch?v=1j8SdS7s_NY
+
 • Column-oriented binary file format 
 • Parquet might be better if you have highly nested data, because it stores its elements as a tree like Google Dremel does 
 • Each data file contains the values for a set of rows 
@@ -265,11 +268,11 @@ Promoted by :
     Cloudera,Spark
 
 
-![FileFormatComparison](HadoopFileFormats.png)
+![FileFormatComparison](big_data\HadoopFileFormats.png)
 
 https://www.datanami.com/2018/05/16/big-data-file-formats-demystified/
 
 
 Final Comparison
 
-![Final comaprison] (Hadoop-format-comparition.png)
+![Final comaprison](big_data\Hadoop-format-comparition.png)

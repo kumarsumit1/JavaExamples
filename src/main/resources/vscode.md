@@ -39,19 +39,20 @@ https://hackernoon.com/setting-up-python-dev-in-vs-code-e84f01c1f64b
  it gets populated with the files.
  
 2.VS Code plugin
-    : Python
+    : Python (Or Python Extension Pack )
     : Intellicode ( AI support for suggestion)
 	: Live share code
 	: Python Language Server
 	: Remote Development ( A suite of remote plugin development )
-	: Bracket Pair Colonizer
+	: Bracket Pair Colorizer
 	: Docker
 	: Settings Sync
 	: WSL
 	: Material Icon pack
 	: Thunder Client ( Rest API very clean )
 	: AWS tool kit 
-	: 
+	: Terrform
+    :
 
 
  
